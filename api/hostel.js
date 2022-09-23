@@ -38,6 +38,21 @@ router.get("/hosteldata", auth, async (req, res) => {
   }
 });
 
+// @route   GET /api/hostel/area/:areaname
+// @desc    Get all data related to particular area for hostels
+router.get("/area/:areaname", async (req, res) => {
+  try {
+    const hostels = await Hostel.find({
+      location: req.params.areaname.toLowerCase(),
+    });
+
+    res.status(200).json(hostels);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Server Error" });
+  }
+});
+
 // @route GET /api/hostel/:hostelId
 // @desc Get a single hostel detail
 router.get("/:hostelId", async (req, res) => {
